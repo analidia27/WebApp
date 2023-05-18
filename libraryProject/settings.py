@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -53,6 +53,11 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'libraryProject.urls'
 
 TEMPLATES = [
+     {
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
+        'APP_DIRS': True,
+    },
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
@@ -104,9 +109,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-ar'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'GMT-3'
 
 USE_I18N = True
 
