@@ -13,6 +13,16 @@ class Partner(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+    surname = models.CharField(max_length=50)
+    nationality = models.CharField(max_length=50)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Book(models.Model):
     title = models.TextField(max_length=255)
     description = models.TextField(max_length=255)
