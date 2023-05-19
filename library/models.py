@@ -21,4 +21,13 @@ class Author(models.Model):
     def __str__(self):
         return self.name
     
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=50)
+    isbn = models.CharField(max_length=50)                      # El isbn es de 13 cifras
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.title
     
