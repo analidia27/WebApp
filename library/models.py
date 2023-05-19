@@ -27,4 +27,5 @@ class Book(models.Model):
     title = models.TextField(max_length=255)
     description = models.TextField(max_length=255)
     ISBN = models.IntegerField(max_length=13)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
