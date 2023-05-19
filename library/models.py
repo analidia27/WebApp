@@ -19,13 +19,13 @@ class Author(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.name
+        return self.surname
     
 class Book(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=50)
     isbn = models.CharField(max_length=50)                      # El isbn es de 13 cifras
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)   # null=True, blank=True)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
