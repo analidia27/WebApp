@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Book
+from .models import Book, Employee
 
 # Register your models here.
 
@@ -14,5 +14,13 @@ class BookAdmin(admin.ModelAdmin):
     # Buscar por campos especificados
     search_fields = ('title',)
 
-admin.site.register(Book, BookAdmin)
 
+class EmployeeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'surname', 'numero_legajo', 'is_active')
+    search_fields = ('name','surname')
+    list_filter = ('is_active')
+
+
+    
+admin.site.register(Book, BookAdmin)
+admin.site.register(Employee,EmployeeAdmin)
