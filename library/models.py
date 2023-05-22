@@ -20,7 +20,7 @@ class Author(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} {self.surname}"
 
 class Employee(models.Model):
     name = models.CharField(max_length=100)
