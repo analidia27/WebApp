@@ -29,7 +29,7 @@ class AuthorAdmin(admin.ModelAdmin):
         "nationality",
         "is_active",
     )
-    list_filter = ("is_active",)
+    list_filter = ("is_active","nationality")
     search_fields = ("name", "surname")
 
 
