@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Book
 from .models import Author
 from .models import Employee
+from .models import Partner
 # Register your models here.
 
 
@@ -42,7 +43,20 @@ class EmployeeAdmin(admin.ModelAdmin):
     list_filter = ("is_active",)
     search_fields = ("name", "surname",)
 
+
+class PartnerAdmin(admin.ModelAdmin):
+    list_display = (
+        "first_name",
+        "last_name",
+        "date_birth",
+        "is_active",
+    )
+    list_filter = ("is_active",)
+    search_fields = ("first_name", "last_name",)
+    
+
     
 admin.site.register(Book, BookAdmin)
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Employee,EmployeeAdmin)
+admin.site.register(Partner, PartnerAdmin)
