@@ -39,3 +39,10 @@ class Book(models.Model):
     ISBN = models.CharField(max_length=13)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
+
+class BookLoan(models.Model):
+    loan_date = models.DateField()
+    return_date = models.DateField()
+    partner = models.ForeignKey(Partner, on_delete=models.CASCADE)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
