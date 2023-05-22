@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Book
 from .models import Author
-
+from .models import Employee
 # Register your models here.
 
 
@@ -32,6 +32,17 @@ class AuthorAdmin(admin.ModelAdmin):
     list_filter = ("is_active","nationality")
     search_fields = ("name", "surname")
 
+class EmployeeAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "surname",
+        "numero_legajo",
+        "is_active",
+    )
+    list_filter = ("is_active",)
+    search_fields = ("name", "surname",)
 
+    
 admin.site.register(Book, BookAdmin)
 admin.site.register(Author, AuthorAdmin)
+admin.site.register(Employee,EmployeeAdmin)
