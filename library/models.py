@@ -33,9 +33,6 @@ class Employee(models.Model):
     
 
     
-    
-
-
 class Book(models.Model):
     title = models.TextField(max_length=255)
     description = models.TextField(max_length=255)
