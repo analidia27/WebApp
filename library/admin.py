@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Book,BookLoan
+from .models import Book, BookLoan
 from .models import Author
 from .models import Employee
 from .models import Partner
-# Register your models here.
 
+# Register your models here.
 
 
 class BookAdmin(admin.ModelAdmin):
@@ -42,12 +42,13 @@ class BookLoanAdmin(admin.ModelAdmin):
         "loan_date",
         "return_date",
     )
-
-    # Buscar por campos especificados
-    search_fields = ("partner","book","employee")
-
-
-    search_fields = ("title",)
+    search_fields = (
+        "partner__first_name",
+        "partner__last_name",
+        "employee__name",
+        "employee__surname",
+        "book__title",
+    )
 
 
 class AuthorAdmin(admin.ModelAdmin):
@@ -57,8 +58,9 @@ class AuthorAdmin(admin.ModelAdmin):
         "nationality",
         "is_active",
     )
-    list_filter = ("is_active","nationality")
+    list_filter = ("is_active", "nationality")
     search_fields = ("name", "surname")
+
 
 class EmployeeAdmin(admin.ModelAdmin):
     list_display = (
@@ -68,7 +70,10 @@ class EmployeeAdmin(admin.ModelAdmin):
         "is_active",
     )
     list_filter = ("is_active",)
-    search_fields = ("name", "surname",)
+    search_fields = (
+        "name",
+        "surname",
+    )
 
 
 class PartnerAdmin(admin.ModelAdmin):
@@ -79,12 +84,14 @@ class PartnerAdmin(admin.ModelAdmin):
         "is_active",
     )
     list_filter = ("is_active",)
-    search_fields = ("first_name", "last_name",)
-    
+    search_fields = (
+        "first_name",
+        "last_name",
+    )
 
-    
+
 admin.site.register(Book, BookAdmin)
 admin.site.register(BookLoan, BookLoanAdmin)
 admin.site.register(Author, AuthorAdmin)
-admin.site.register(Employee,EmployeeAdmin)
+admin.site.register(Employee, EmployeeAdmin)
 admin.site.register(Partner, PartnerAdmin)
