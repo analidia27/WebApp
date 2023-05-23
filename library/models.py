@@ -29,7 +29,7 @@ class Employee(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.surname
+        return f"{self.name} {self.surname}"
     
 
     
@@ -39,6 +39,8 @@ class Book(models.Model):
     ISBN = models.CharField(max_length=13)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
+    def __str__(self):
+        return self.title
 
 class BookLoan(models.Model):
     loan_date = models.DateField()
