@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-#from .models import Employee
+from .models import Employee
 from .forms import EmployeeForm
 from django.http import HttpResponseRedirect
 
@@ -26,3 +26,14 @@ def create_employee(request):
     context = {'form': form}
     
     return render(request, 'create_employee.html', context)
+
+
+def list_employees(request):
+
+    employees = Employee.objects.all()
+
+    context = {
+        'employees' : employees
+    }
+    
+    return render(request, 'list_employees.html', context=context)
