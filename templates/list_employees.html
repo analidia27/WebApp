@@ -1,38 +1,37 @@
-{% extends 'base.html'  %}
+{% extends 'base.html' %} {% block content %}
+<h1>Lista de empleados</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Número de Legajo</th>
+      <th>Activo</th>
+      <th>Acción</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for employee in employees %}
+    <tr>
+      <td>{{ employee.id }}</td>
+      <td>{{ employee.name }}</td>
+      <td>{{ employee.surname }}</td>
+      <td>{{ employee.numero_legajo }}</td>
+      {%- if employee.is_active -%}
+      <td>Si</td>
+      {% else %}
+      <td>No</td>
+      {% endif %}
+      <td>
+        <a href="./nuevo/{{employee.id}}">Editar</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br />
 
-{% block content %}
-    <h1> Lista de empleados</h1>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Número de Legajo</th>
-                <th>Activo</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for employee in employees %}
-            <tr>
-                <td>{{ employee.id }}</td>
-                <td>{{ employee.name }}</td>
-                <td>{{ employee.surname }}</td>
-                <td>{{ employee.numero_legajo }}</td>
-                {%- if employee.is_active -%}
-                   <td> Si </td> 
-                {% else %}
-                <td> No </td> 
-                {% endif %}
-
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <br>
-
-    <a href="{{'./nuevo'}}" class="btn btn-primary">Crear</a>
-
-
+<a href="{{'./nuevo'}}" class="btn btn-primary">Crear</a>
 
 {% endblock %}
