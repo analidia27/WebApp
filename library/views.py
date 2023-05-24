@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 # Create your views here.
 
 def create_employee(request,id=None):
-
+    """"""
     if(id != None):
         requested_employed = Employee.objects.get(id=id)
         form = EmployeeForm(instance=requested_employed) 
@@ -23,7 +23,6 @@ def create_employee(request,id=None):
 
 
         else:
-            print("hola no soy valido")
             return HttpResponseRedirect('create_employee/')
 
     context = {'form': form,'is_update':id != None}

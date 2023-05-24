@@ -12,4 +12,11 @@ class EmployeeForm(forms.ModelForm):
             'numero_legajo': 'Número de legajo',
             'is_active': 'Activo'
         }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        instance = kwargs.get('instance')
+
+        if instance:
+            # Si existe una instancia, ocultar el campo is_active durante la actualización
+            self.fields['is_active'].widget = forms.HiddenInput()
 

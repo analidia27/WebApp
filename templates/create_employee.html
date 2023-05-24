@@ -1,7 +1,9 @@
 {% extends "base.html" %} {% block title %} Creando empleado {% endblock %} {%
-block content %}
-
+block content %} {% if is_update %}
+<h1>Editar empleado</h1>
+{% else %}
 <h1>Crear empleado</h1>
+{% endif %}
 <form action="" method="POST">
   <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
   {{ form.as_p() }} {% if is_update %}
