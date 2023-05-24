@@ -9,10 +9,8 @@ def create_employee(request,id=None):
 
     if(id != None):
         requested_employed = Employee.objects.get(id=id)
-        print(requested_employed.id)
         form = EmployeeForm(instance=requested_employed) 
     else:
-        print("adios")
         form = EmployeeForm()
     if request.method == "POST":
 
