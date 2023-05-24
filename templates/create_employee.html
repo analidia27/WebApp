@@ -1,18 +1,14 @@
-{% extends "base.html"  %}
+{% extends "base.html" %} {% block title %} Creando empleado {% endblock %} {%
+block content %}
 
-{% block title %}
-Creando empleado
-{% endblock %}
-
-{% block content %}
-
-    <h1> Crear empleado </h1>
-    <form action="" method="POST">
-        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-        {{ form.as_p() }}
-
-        <button type="submit" class=""> Crear </button>
-    </form>
-
+<h1>Crear empleado</h1>
+<form action="" method="POST">
+  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+  {{ form.as_p() }} {% if is_update %}
+  <button type="submit" class="">Editar</button>
+  {% else %}
+  <button type="submit" class="">Crear</button>
+  {% endif %}
+</form>
 
 {% endblock %}

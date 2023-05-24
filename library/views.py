@@ -5,25 +5,28 @@ from django.http import HttpResponseRedirect
 
 # Create your views here.
 
-def create_employee(request):
+def create_employee(request,id=None):
 
-    form = EmployeeForm()
-
+    if(id != None):
+        requested_employed = Employee.objects.get(id=id)
+        form = EmployeeForm(instance=requested_employed) 
+    else:
+        form = EmployeeForm()
     if request.method == "POST":
 
-        form = EmployeeForm(request.POST)
-
+        if(id):
+            form = EmployeeForm(request.POST,instance=requested_employed) 
+        else:
+            form = EmployeeForm(request.POST)
         if form.is_valid():
-
             form.save()
 
-            #return redirect('/empleados/lista')
 
         else:
-        
+            print("hola no soy valido")
             return HttpResponseRedirect('create_employee/')
 
-    context = {'form': form}
+    context = {'form': form,'is_update':id != None}
     
     return render(request, 'create_employee.html', context)
 
