@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Employee
-from .forms import EmployeeForm
+from .models import Employee, Author
+from .forms import EmployeeForm, AuthorForm
 from django.http import HttpResponseRedirect
 
 # Create your views here.
@@ -48,3 +48,29 @@ def change_status_employee(request,id):
         employee.is_active = True
     employee.save()
     return redirect('list_employees') 
+
+
+def create_update_author(request, id=None):
+    if(id):
+        """ Si se envia el id del autor se obtiene el objeto y se crea el formulario con datos, 
+        sino se crea el formulario vacio"""
+        requested_author = Author.objects.get(id=id)
+        form = AuthorForm(instance=requested_author) 
+    else:
+        form = AuthorForm()
+        
+    if request.method == "POST":
+        if(id):
+            form = AuthorForm(request.POST,instance=requested_author) 
+        else:
+            form = AuthorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/autores/listado')
+
+        else:
+            return HttpResponseRedirect('create_author/')
+        
+    context = {'form': form,'is_update': id != None}
+    
+    return render(request, 'create_author.html', context)
