@@ -39,3 +39,12 @@ def list_employees(request):
     }
     
     return render(request, 'list_employees.html', context=context)
+
+def change_status_employee(request,id):
+    employee = Employee.objects.get(id=id)
+    if employee.is_active:
+        employee.is_active = False
+    else:
+        employee.is_active = True
+    employee.save()
+    return redirect('list_employees') 

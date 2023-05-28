@@ -8,7 +8,7 @@
       <th>Apellido</th>
       <th>Número de Legajo</th>
       <th>Activo</th>
-      <th>Acción</th>
+      <th>Acciones</th>
     </tr>
   </thead>
   <tbody>
@@ -25,6 +25,11 @@
       {% endif %}
       <td>
         <a href="./editar/{{employee.id}}">Editar</a>
+        {% if employee.is_active %}
+        <a href="./estado/{{employee.id}}">Desactivar</a>
+        {%else %}
+        <a href="./estado/{{employee.id}}">Activar</a>
+        {%endif%}
       </td>
     </tr>
     {% endfor %}
