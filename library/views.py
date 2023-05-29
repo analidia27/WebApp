@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Employee, Author
-from .forms import EmployeeForm, AuthorForm
+from .models import Employee, Author,Partner
+from .forms import EmployeeForm, AuthorForm, PartnerForm
 from django.http import HttpResponseRedirect
 
 # Create your views here.
@@ -97,3 +97,47 @@ def change_status_author(request,id):
         author.is_active = True
     author.save()
     return redirect('list_authors') 
+
+def create_update_partner(request, id=None):
+    if(id):
+        """ Si se envia el id del socio se obtiene el objeto y se crea el formulario con datos, 
+        sino se crea el formulario vacio"""
+        requested_partner = Partner.objects.get(id=id)
+        form = PartnerForm(instance=requested_partner) 
+    else:
+        form = PartnerForm()
+        
+    if request.method == "POST":
+        if(id):
+            form = PartnerForm(request.POST,instance=requested_partner) 
+        else:
+            form = PartnerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/socios/listado')
+
+        else:
+            return HttpResponseRedirect('create_partner/')
+        
+    context = {'form': form,'is_update': id != None}
+    
+    return render(request, 'create_partner.html', context)
+
+def list_partners(request):
+
+    partners = Partner.objects.all()
+
+    context = {
+        'partners' : partners
+    }
+    
+    return render(request, 'list_partners.html', context=context)
+
+def change_status_partner(request,id):
+    partner = Partner.objects.get(id=id)
+    if partner.is_active:
+        partner.is_active = False
+    else:
+        partner.is_active = True
+    partner.save()
+    return redirect('list_partners') 
