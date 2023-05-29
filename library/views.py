@@ -74,3 +74,14 @@ def create_update_author(request, id=None):
     context = {'form': form,'is_update': id != None}
     
     return render(request, 'create_author.html', context)
+
+
+def list_authors(request):
+
+    authors = Author.objects.all()
+
+    context = {
+        'authors' : authors
+    }
+    
+    return render(request, 'list_authors.html', context=context)
