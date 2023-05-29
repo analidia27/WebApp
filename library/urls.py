@@ -10,5 +10,5 @@ urlpatterns = [
     path('autores/nuevo', views.create_update_author, name='create_author'),
     path('autores/editar/<int:id>', views.create_update_author, name='update_author'),
     path('autores/listado', views.list_authors, name='list_authors'),
-
+    path('autores/estado/<int:id>', views.change_status_author, name='change_status_author'),
 ]
