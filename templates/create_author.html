@@ -1,13 +1,13 @@
 {% extends "base.html" %} 
   {% block title %} 
-    	Creando empleado 
+    	Creando autor 
   {% endblock %} 
 
   {% block content %} 
   {% if is_update %}
-    	<h1>Editar autor</h1>
+    	<h1>Editar Autor</h1>
   {% else %}
-      <h1>Crear autor</h1>
+      <h1>Crear Autor</h1>
   {% endif %}
 
   <form action="" method="POST">
@@ -16,7 +16,7 @@
     {% if is_update %}
       <button type="submit" class="">Editar</button>
       <br /><br />
-      <a href="{{'/autor/listado'}}" class="btn btn-primary">Lista de Autores</a>
+      <a href="{{'/autores/listado'}}" class="btn btn-primary">Lista de Autores</a>
     {% else %}
       <button type="submit" class="">Crear</button>
       <br /><br />
