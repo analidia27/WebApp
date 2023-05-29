@@ -20,6 +20,7 @@ def create_employee(request,id=None):
             form = EmployeeForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect('list_employees')
 
 
         else:
