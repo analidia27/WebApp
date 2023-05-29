@@ -4,6 +4,8 @@ from .forms import EmployeeForm, AuthorForm
 from django.http import HttpResponseRedirect
 
 # Create your views here.
+def index(request):
+    return render(request, 'index.html')
 
 def create_employee(request,id=None):
     """"""
@@ -20,6 +22,7 @@ def create_employee(request,id=None):
             form = EmployeeForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect('list_employees')
 
 
         else:

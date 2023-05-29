@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Libreria</h1>
+    <div class="d-sm-flex flex-sm-wrap d-md-flex justify-content-md-center flex-md-row my-4">
+      <a href="{{'/empleados/listado'}}" style="text-decoration: none" class="m-2">
+        <div
+          class="card shadow-sm"
+          style="width: 15rem; color: grey; height: 18rem"
+        >
+          <div class="d-flex justify-content-center">
+            <i class="bi bi-people-fill" style="font-size: 10rem"></i>
+          </div>
+          <p class="text-center text-dark">Empleados</p>
+        </div>
+      </a>
+      <a href="{{'/autores/listado'}}" style="text-decoration: none" class="m-2">
+        <div
+          class="card shadow-sm"
+          style="width: 15rem; color: grey; height: 18rem"
+        >
+          <div class="d-flex justify-content-center">
+            <i class="bi bi-bookmark-heart-fill" style="font-size: 10rem"></i>
+          </div>
+          <p class="text-center text-dark">Autores</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+{% endblock %}

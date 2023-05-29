@@ -7,13 +7,15 @@ block content %} {% if is_update %}
 <form action="" method="POST">
   <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
   {{ form.as_p() }} {% if is_update %}
-  <button type="submit" class="">Editar</button>
+  <button type="submit" class="btn btn-primary">Editar</button>
   <br /><br />
-  <a href="{{'/empleados/listado'}}" class="btn btn-primary">Lista de Empleados</a>
+  <a href="{{'/empleados/listado'}}" class="btn btn-primary">
+    <i class="bi bi-arrow-left"></i>
+    Volver al listado
+  </a>
   {% else %}
-  <button type="submit" class="">Crear</button>
+  <button type="submit" class="btn btn-primary">Crear</button>
   <br /><br />
-  <a href="{{'./listado'}}" class="btn btn-primary">Lista de Empleados</a>
   {% endif %}
 </form>
 
