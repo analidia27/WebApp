@@ -88,3 +88,12 @@ def list_authors(request):
     }
     
     return render(request, 'list_authors.html', context=context)
+
+def change_status_author(request,id):
+    author = Author.objects.get(id=id)
+    if author.is_active:
+        author.is_active = False
+    else:
+        author.is_active = True
+    author.save()
+    return redirect('list_authors') 
