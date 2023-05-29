@@ -1,16 +1,18 @@
 {% extends 'base.html' %} 
 {% block content %}
-
+<a href="{{'/'}}" class="btn btn-light text-primary">
+  <i class="bi bi-arrow-left"></i>
+  Volver a Inicio
+</a>
 <h1 class="text-center">Lista de autores</h1>
-<a href="{{'./nuevo'}}" class="btn btn-primary">
+<a href="{{'./nuevo'}}" class="btn btn-primary my-3">
   <i class="bi bi-person-plus-fill"></i>
   Añadir Autor
 </a>
 
-<h1>Lista de Autores</h1>
 
 <table class="table">
-  <thead>
+  <thead class="text-center">
     <tr>
       <th>Id</th>
       <th>Nombre</th>
@@ -20,7 +22,7 @@
       <th>Acción</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="text-center">
     {% for author in authors %}
     <tr>
       <td>{{ author.id }}</td>

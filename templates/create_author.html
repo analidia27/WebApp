@@ -1,27 +1,22 @@
-{% extends "base.html" %} 
-  {% block title %} 
-    	Creando autor 
-  {% endblock %} 
+{% extends "base.html" %} {% block title %} Creando autor {% endblock %} {%
+block content %} {% if is_update %}
+<h1>Editar Autor</h1>
+{% else %}
+<h1>Crear Autor</h1>
+{% endif %}
 
-  {% block content %} 
-  {% if is_update %}
-    	<h1>Editar Autor</h1>
+<form action="" method="POST">
+  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+  {{ form.as_p() }} {% if is_update %}
+  <button type="submit" class="btn btn-primary">Editar</button>
+  <br /><br />
   {% else %}
-      <h1>Crear Autor</h1>
+  <button type="submit" class="btn btn-primary">Crear</button>
+  <br /><br />
   {% endif %}
+</form>
+<a href="{{'/autores/listado'}}" class="btn btn-secondary">
+  <i class="bi bi-arrow-left"></i> Volver al listado</a
+>
 
-  <form action="" method="POST">
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-    {{ form.as_p() }} 
-    {% if is_update %}
-      <button type="submit" class="">Editar</button>
-      <br /><br />
-      <a href="{{'/autores/listado'}}" class="btn btn-primary">Lista de Autores</a>
-    {% else %}
-      <button type="submit" class="">Crear</button>
-      <br /><br />
-      <a href="{{'./listado'}}" class="btn btn-primary">Lista de Autores</a>
-    {% endif %}
-  </form>
-
-  {% endblock %}
+{% endblock %}

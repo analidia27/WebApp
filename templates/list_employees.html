@@ -1,11 +1,15 @@
 {% extends 'base.html' %} {% block content %}
+<a href="{{'/'}}" class="btn btn-light text-primary">
+  <i class="bi bi-arrow-left"></i>
+  Volver a Inicio
+</a>
 <h1 class="text-center">Lista de empleados</h1>
-<a href="{{'./nuevo'}}" class="btn btn-primary">
+<a href="{{'./nuevo'}}" class="btn btn-primary my-3">
   <i class="bi bi-person-plus-fill"></i>
   Añadir Empleado
 </a>
 <table class="table">
-  <thead>
+  <thead class="text-center">
     <tr>
       <th scope="col">Id</th>
       <th scope="col">Nombre</th>
@@ -15,7 +19,7 @@
       <th scope="col">Acciones</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="text-center">
     {% for employee in employees %}
     <tr>
       <td>{{ employee.id }}</td>
@@ -31,7 +35,7 @@
         <a href="./editar/{{employee.id}}" class="btn btn-warning">
           <i class="bi bi-pencil-fill"></i>
           Editar
-          </a>
+        </a>
         {% if employee.is_active %}
         <a href="./estado/{{employee.id}}" class="btn btn-danger">
           <i class="bi bi-hand-thumbs-down-fill"></i>
