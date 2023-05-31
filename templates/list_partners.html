@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% block content %}
+
 <a href="{{'/'}}" class="btn btn-light text-primary">
   <i class="bi bi-arrow-left"></i>
   Volver a Inicio
@@ -25,7 +26,7 @@
       <td>{{ partner.id }}</td>
       <td>{{ partner.first_name }}</td>
       <td>{{ partner.last_name }}</td>
-      <td>{{ partner.date_birth }}</td>
+      <td>{{ partner.date_birth.strftime("%d/%m/%Y")}}</td>
       {%- if partner.is_active -%}
       <td>Si</td>
       {% else %}
