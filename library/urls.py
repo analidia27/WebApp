@@ -18,5 +18,6 @@ urlpatterns = [
     path('libros/nuevo', views.create_update_book, name='create_book'),
     path('libros/listado', views.list_books, name='list_books'),
     path('libros/editar/<int:id>', views.create_update_book, name='update_book'),
+    path('libros/estado/<int:id>', views.change_status_book, name='change_status_book'),
     
 ]
