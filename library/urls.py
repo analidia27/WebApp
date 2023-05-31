@@ -19,5 +19,5 @@ urlpatterns = [
     path('libros/listado', views.list_books, name='list_books'),
     path('libros/editar/<int:id>', views.create_update_book, name='update_book'),
     path('libros/estado/<int:id>', views.change_status_book, name='change_status_book'),
-    
+    path('prestamos_libros/listado', views.list_book_loans, name='list_book_loans'),
 ]
