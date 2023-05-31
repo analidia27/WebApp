@@ -1,0 +1,62 @@
+{% extends 'base.html' %} 
+{% block content %}
+<a href="{{'/'}}" class="btn btn-light text-primary">
+  <i class="bi bi-arrow-left"></i>
+  Volver a Inicio
+</a>
+<h1 class="text-center">Lista de libros</h1>
+<a href="{{'./nuevo'}}" class="btn btn-primary my-3">
+  <i class="bi bi-person-plus-fill"></i>
+  Añadir Libro
+</a>
+
+
+<table class="table">
+  <thead class="text-center">
+    <tr>
+      <th>Id</th>
+      <th>Título</th>
+      <th>Descripción</th>
+      <th>ISBN</th>
+      <th>Autor</th>
+      <th>Activo</th>
+      <th>Acción</th>
+    </tr>
+  </thead>
+  <tbody class="text-center">
+    {% for book in books %}
+    <tr>
+      <td>{{ book.id }}</td>
+      <td>{{ book.title }}</td>
+      <td>{{ book.description }}</td>
+      <td>{{ book.ISBN }}</td>
+      <td>{{ book.author }}</td>
+      {%- if book.active -%}
+      <td>Si</td>
+      {% else %}
+      <td>No</td>
+      {% endif %}
+      <td>
+        <a href="./editar/{{book.id}}"  class="btn btn-warning">
+          <i class="bi bi-pencil-fill"></i>
+          Editar
+        </a>
+        {% if book.is_active %}
+        <a href="./estado/{{book.id}}" class="btn btn-danger">
+          <i class="bi bi-hand-thumbs-down-fill"></i>
+          Desactivar
+        </a>
+        {%else %}
+        <a href="./estado/{{book.id}}" class="btn btn-success">
+          <i class="bi bi-hand-thumbs-up-fill"></i>
+          Activar
+        </a>
+        {%endif%}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br />
+
+{% endblock %}
