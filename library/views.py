@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Employee, Author,Partner
-from .forms import EmployeeForm, AuthorForm, PartnerForm
+from .models import Employee, Author,Partner, Book
+from .forms import EmployeeForm, AuthorForm, PartnerForm,BookForm
 from django.http import HttpResponseRedirect
 
 # Create your views here.
@@ -141,3 +141,29 @@ def change_status_partner(request,id):
         partner.is_active = True
     partner.save()
     return redirect('list_partners') 
+
+
+def create_update_book(request, id=None):
+    if(id):
+        """ Si se envia el id del libro se obtiene el objeto y se crea el formulario con datos, 
+        sino se crea el formulario vacio"""
+        requested_book = Book.objects.get(id=id)
+        form = BookForm(instance=requested_book) 
+    else:
+        form = BookForm()
+        
+    if request.method == "POST":
+        if(id):
+            form = BookForm(request.POST,instance=requested_book) 
+        else:
+            form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+        else:
+            return HttpResponseRedirect('create_book/')
+        
+    context = {'form': form,'is_update': id != None}
+    
+    return render(request, 'create_book.html', context)

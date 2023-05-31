@@ -15,4 +15,6 @@ urlpatterns = [
     path('socios/listado', views.list_partners, name='list_partners'),
     path('socios/editar/<int:id>', views.create_update_partner, name='update_partner'),
     path('socios/estado/<int:id>', views.change_status_partner, name='change_status_partner'),
+    path('libros/nuevo', views.create_update_book, name='create_book'),
+    path('libros/editar/<int:id>', views.create_update_book, name='update_book'),
 ]
