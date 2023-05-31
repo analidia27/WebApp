@@ -37,7 +37,13 @@ class PartnerForm(forms.ModelForm):
         widgets = {
             'date_birth': forms.DateInput(attrs={'type': 'date'})
         }
-
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance')
+        if instance:
+            initial = kwargs.get('initial', {})
+            initial['date_birth'] = instance.date_birth.strftime('%Y-%m-%d')
+            kwargs['initial'] = initial
+        super().__init__(*args, **kwargs)
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
