@@ -1,5 +1,5 @@
 from django import forms
-from .models import Employee, Author,Partner
+from .models import Book, Employee, Author,Partner
 
 
 class EmployeeForm(forms.ModelForm):
@@ -38,3 +38,16 @@ class PartnerForm(forms.ModelForm):
             'date_birth': forms.DateInput(attrs={'type': 'date'})
         }
 
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['title','description','ISBN','author']
+        labels = {
+                'title': 'Titulo',
+                'description': 'Descripción',
+                'ISBN': 'ISBN',
+                'author':'Autor'
+            }
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.fields['author'].queryset = Author.objects.filter(is_active=True)
