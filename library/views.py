@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Employee, Author,Partner, Book
+from .models import Employee, Author,Partner, Book, BookLoan
 from .forms import EmployeeForm, AuthorForm, PartnerForm, BookForm
 from django.http import HttpResponseRedirect
 
@@ -8,7 +8,8 @@ def index(request):
     return render(request, 'index.html')
 
 def create_employee(request,id=None):
-    """"""
+    """Si se envia el id del empleado se obtiene el objeto y se crea el formulario con datos, 
+        sino se crea el formulario vacio"""
     if(id != None):
         try:
             requested_employed = Employee.objects.get(id=id)
@@ -198,3 +199,14 @@ def change_status_book(request,id):
         book.active = True
     book.save()
     return redirect('list_books') 
+
+
+def list_book_loans(request):
+
+    book_loans = BookLoan.objects.all()
+
+    context = {
+        'book_loans' : book_loans
+    }
+    
+    return render(request, 'list_book_loans.html', context=context)
