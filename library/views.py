@@ -171,7 +171,7 @@ def create_update_book(request, id=None):
             form = BookForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('libros/listado')
+            return redirect('/libros/listado')
 
         else:
             return HttpResponseRedirect('create_book/')
