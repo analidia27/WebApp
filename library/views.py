@@ -189,3 +189,12 @@ def list_books(request):
     }
     
     return render(request, 'list_books.html', context=context)
+
+def change_status_book(request,id):
+    book = Book.objects.get(id=id)
+    if book.active:
+        book.active = False
+    else:
+        book.active = True
+    book.save()
+    return redirect('list_books') 
