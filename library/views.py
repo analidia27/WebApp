@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Employee, Author,Partner, Book
-from .forms import EmployeeForm, AuthorForm, PartnerForm,BookForm
+from .forms import EmployeeForm, AuthorForm, PartnerForm, BookForm
 from django.http import HttpResponseRedirect
 
 # Create your views here.
@@ -10,8 +10,11 @@ def index(request):
 def create_employee(request,id=None):
     """"""
     if(id != None):
-        requested_employed = Employee.objects.get(id=id)
-        form = EmployeeForm(instance=requested_employed) 
+        try:
+            requested_employed = Employee.objects.get(id=id)
+            form = EmployeeForm(instance=requested_employed)         
+        except Exception:
+            return render(request, 'error.html')
     else:
         form = EmployeeForm()
     if request.method == "POST":
@@ -57,8 +60,11 @@ def create_update_author(request, id=None):
     if(id):
         """ Si se envia el id del autor se obtiene el objeto y se crea el formulario con datos, 
         sino se crea el formulario vacio"""
-        requested_author = Author.objects.get(id=id)
-        form = AuthorForm(instance=requested_author) 
+        try:
+            requested_author = Author.objects.get(id=id)
+            form = AuthorForm(instance=requested_author)
+        except Exception:
+            return render(request, 'error.html') 
     else:
         form = AuthorForm()
         
@@ -102,8 +108,11 @@ def create_update_partner(request, id=None):
     if(id):
         """ Si se envia el id del socio se obtiene el objeto y se crea el formulario con datos, 
         sino se crea el formulario vacio"""
-        requested_partner = Partner.objects.get(id=id)
-        form = PartnerForm(instance=requested_partner) 
+        try: 
+            requested_partner = Partner.objects.get(id=id)
+            form = PartnerForm(instance=requested_partner) 
+        except Exception:
+            return render(request, 'error.html')
     else:
         form = PartnerForm()
         
@@ -147,8 +156,11 @@ def create_update_book(request, id=None):
     if(id):
         """ Si se envia el id del libro se obtiene el objeto y se crea el formulario con datos, 
         sino se crea el formulario vacio"""
-        requested_book = Book.objects.get(id=id)
-        form = BookForm(instance=requested_book) 
+        try:
+            requested_book = Book.objects.get(id=id)
+            form = BookForm(instance=requested_book) 
+        except Exception:
+            return render(request, 'error.html')
     else:
         form = BookForm()
         
@@ -159,7 +171,7 @@ def create_update_book(request, id=None):
             form = BookForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/')
+            return redirect('/libros/listado')
 
         else:
             return HttpResponseRedirect('create_book/')
@@ -167,3 +179,13 @@ def create_update_book(request, id=None):
     context = {'form': form,'is_update': id != None}
     
     return render(request, 'create_book.html', context)
+
+def list_books(request):
+
+    books = Book.objects.all()
+
+    context = {
+        'books' : books
+    }
+    
+    return render(request, 'list_books.html', context=context)
