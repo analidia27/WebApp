@@ -1,5 +1,4 @@
-{% extends 'base.html' %} 
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <a href="{{'/'}}" class="btn btn-light text-primary">
   <i class="bi bi-arrow-left"></i>
   Volver a Inicio
@@ -9,7 +8,6 @@
   <i class="bi bi-person-plus-fill"></i>
   Añadir Libro
 </a>
-
 
 <table class="table">
   <thead class="text-center">
@@ -28,7 +26,9 @@
     <tr>
       <td>{{ book.id }}</td>
       <td>{{ book.title }}</td>
-      <td>{{ book.description }}</td>
+      <td>
+        <p class="d-inline-block text-truncate" style="max-width: 250px;">{{ book.description }}</p>
+      </td>
       <td>{{ book.ISBN }}</td>
       <td>{{ book.author }}</td>
       {%- if book.active -%}
@@ -37,7 +37,7 @@
       <td>No</td>
       {% endif %}
       <td>
-        <a href="./editar/{{book.id}}"  class="btn btn-warning">
+        <a href="./editar/{{book.id}}" class="btn btn-warning">
           <i class="bi bi-pencil-fill"></i>
           Editar
         </a>
