@@ -1,5 +1,5 @@
 from django import forms
-from .models import Book, Employee, Author,Partner
+from .models import Book, Employee, Author,Partner, BookLoan
 
 
 class EmployeeForm(forms.ModelForm):
@@ -44,6 +44,8 @@ class PartnerForm(forms.ModelForm):
             initial['date_birth'] = instance.date_birth.strftime('%Y-%m-%d')
             kwargs['initial'] = initial
         super().__init__(*args, **kwargs)
+
+
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
@@ -57,3 +59,29 @@ class BookForm(forms.ModelForm):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
             self.fields['author'].queryset = Author.objects.filter(is_active=True)
+
+
+class BookLoanForm(forms.ModelForm):
+    class Meta:
+        model = BookLoan
+        fields = ['book','partner','employee','loan_date','return_date']
+        labels = {
+                'book':'Libro',
+                'partner': 'Socio',
+                'employee':'Empleado',
+                'loan_date': 'Fecha de Prestamo',
+                'return_date': 'Fecha de Retorno'
+            }
+        widgets = {
+                'loan_date': forms.DateInput(attrs={'type': 'date'})
+            }
+
+        
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance')
+        if instance:
+            initial = kwargs.get('initial', {})
+            initial['loan_date'] = instance.loan_date.strftime('%Y-%m-%d')
+            kwargs['initial'] = initial
+        super().__init__(*args, **kwargs)
+

@@ -42,9 +42,13 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
+
+
 class BookLoan(models.Model):
     loan_date = models.DateField()
     return_date = models.DateField()
     partner = models.ForeignKey(Partner, on_delete=models.CASCADE)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
+
+   

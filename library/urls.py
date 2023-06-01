@@ -20,4 +20,6 @@ urlpatterns = [
     path('libros/editar/<int:id>', views.create_update_book, name='update_book'),
     path('libros/estado/<int:id>', views.change_status_book, name='change_status_book'),
     path('prestamos_libros/listado', views.list_book_loans, name='list_book_loans'),
+    path('prestamos_libros/nuevo', views.create_update_loan, name='update_book_loan'),
+    path('prestamos_libros/editar/<int:id>', views.create_update_loan, name='create_book_loan'),
 ]
