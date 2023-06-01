@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Employee, Author,Partner, Book, BookLoan
-from .forms import EmployeeForm, AuthorForm, PartnerForm, BookForm
+from .forms import EmployeeForm, AuthorForm, PartnerForm, BookForm, BookLoanForm
 from django.http import HttpResponseRedirect
 
 # Create your views here.
@@ -210,3 +210,31 @@ def list_book_loans(request):
     }
     
     return render(request, 'list_book_loans.html', context=context)
+
+def create_update_loan(request, id=None):
+    if(id):
+        """ Si se envia el id del libro se obtiene el objeto y se crea el formulario con datos, 
+        sino se crea el formulario vacio"""
+        try:
+            requested_book_loan = BookLoan.objects.get(id=id)
+            form = BookLoanForm(instance=requested_book_loan) 
+        except Exception:
+            return render(request, 'error.html')
+    else:
+        form = BookLoanForm()
+        
+    if request.method == "POST":
+        if(id):
+            form = BookLoanForm(request.POST,instance=requested_book_loan) 
+        else:
+            form = BookLoanForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/prestamos_libros/listado')
+
+        else:
+            return HttpResponseRedirect('create_book_loan/')
+        
+    context = {'form': form,'is_update': id != None}
+    
+    return render(request, 'create_book_loan.html', context)
