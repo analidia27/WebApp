@@ -61,6 +61,7 @@ class BookForm(forms.ModelForm):
             self.fields['author'].queryset = Author.objects.filter(is_active=True)
 
 
+
 class BookLoanForm(forms.ModelForm):
     class Meta:
         model = BookLoan
@@ -73,10 +74,16 @@ class BookLoanForm(forms.ModelForm):
                 'return_date': 'Fecha de Retorno'
             }
         widgets = {
-                'loan_date': forms.DateInput(attrs={'type': 'date'})
+                'loan_date': forms.DateInput(attrs={'type': 'date'}),
+                'return_date': forms.DateInput(attrs={'type': 'date'})
             }
 
-        
+    book = forms.ModelChoiceField(queryset=Book.objects.filter(active=True))
+    partner = forms.ModelChoiceField(queryset=Partner.objects.filter(is_active=True))
+    employee = forms.ModelChoiceField(queryset=Employee.objects.filter(is_active=True))
+
+
+
     def __init__(self, *args, **kwargs):
         instance = kwargs.get('instance')
         if instance:

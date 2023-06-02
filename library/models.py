@@ -50,5 +50,3 @@ class BookLoan(models.Model):
     partner = models.ForeignKey(Partner, on_delete=models.CASCADE)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
-
-   
