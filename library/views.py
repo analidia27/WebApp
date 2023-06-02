@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Employee, Author,Partner, Book, BookLoan
 from .forms import EmployeeForm, AuthorForm, PartnerForm, BookForm, BookLoanForm
 from django.http import HttpResponseRedirect
@@ -238,3 +238,18 @@ def create_update_loan(request, id=None):
     context = {'form': form,'is_update': id != None}
     
     return render(request, 'create_book_loan.html', context)
+
+def delete_book_loan(request,id):
+    try:
+        book_loan = BookLoan.objects.get(id=id)
+        if request.method == 'POST':
+            book_loan.delete()
+            return redirect('/prestamos_libros/listado')
+        context = {
+            'book_loan': book_loan
+        }
+        return render(request, 'delete_book_loan.html', context)
+    except Exception:
+        return render(request, 'error.html')
+
+
