@@ -22,4 +22,6 @@ urlpatterns = [
     path('prestamos_libros/listado', views.list_book_loans, name='list_book_loans'),
     path('prestamos_libros/nuevo', views.create_update_loan, name='update_book_loan'),
     path('prestamos_libros/editar/<int:id>', views.create_update_loan, name='create_book_loan'),
+    path('prestamos_libros/eliminar/<int:id>', views.delete_book_loan, name='delete_book_loan'),
+
 ]
