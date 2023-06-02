@@ -1,0 +1,29 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+    <div class="container">
+
+        <h3>Eliminar prestamo de libro </h3>
+        <p> <b>Fecha de prestamo:</b>  {{ book_loan.loan_date }}</p>
+        <p> <b>Fecha de devolución:</b> {{ book_loan.return_date }}</p>
+        <p> <b>Socio: </b>{{ book_loan.partner }}</p>
+        <p> <b>Empleado:</b> {{ book_loan.employee }}</p>
+        <p> <b>Libro:</b> {{ book_loan.book }}</p>
+
+        <p>¿Quiere proceder con la eliminación de este prestamo de libro?</p>
+    
+        <form method="post">
+    
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    
+            <button type="submit" class="btn btn-danger">Sí, deseo eliminar</button>
+    
+            <a class="btn btn-primary" href="{{ '../listado' }}">Cancelar</a>
+    
+        </form>
+
+
+    </div>
+
+{% endblock %}

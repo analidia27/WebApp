@@ -1,0 +1,34 @@
+{% extends "base.html" %} {% block title %} Creando libro {% endblock %} {%
+block content %} {% if is_update %}
+<h1>Editar Libro</h1>
+{% else %}
+<h1>Añadir Libro</h1>
+{% endif %}
+
+<form action="" method="POST">
+  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+  <div class="mb-3">
+    <label class="form-label">{{ form.title.label }}</label>
+    <div class="form-field">{{ form.title }} {{ form.title.errors }}</div>
+    <label class="form-label">{{ form.description.label }}</label>
+    <div class="form-field">
+      {{ form.description }} {{ form.description.errors }}
+    </div>
+    <label class="form-label">{{ form.ISBN.label }}</label>
+    <div class="form-field">{{ form.ISBN }} {{ form.ISBN.errors }}</div>
+    <label class="form-label">{{ form.author.label }}</label>
+    <div class="form-field">{{ form.author }} {{ form.author.errors }}</div>
+  </div>
+  {% if is_update %}
+  <button type="submit" class="btn btn-primary">Editar</button>
+  <br /><br />
+  {% else %}
+  <button type="submit" class="btn btn-primary">Añadir</button>
+  <br /><br />
+  {% endif %}
+</form>
+<a href="{{'/libros/listado'}}" class="btn btn-secondary">
+  <i class="bi bi-arrow-left"></i> Volver al listado</a
+>
+
+{% endblock %}
