@@ -2,7 +2,7 @@ import json
 from django.http import HttpResponse, JsonResponse
 from django.core.serializers import serialize
 from django.shortcuts import render
-from library.models import Book,Author
+from library.models import Book, Author
 
 def list_books_json(request):
     books = Book.objects.all().values('id', 'title','author')
@@ -22,3 +22,30 @@ def list_books_json(request):
         'libros': list_books
     }
     return HttpResponse(json.dumps(data, ensure_ascii=False).encode('utf-8'), content_type="application/json") 
+
+
+
+def book_json(request, id):
+
+    if request.method == 'GET':
+        try:
+
+            book = Book.objects.get(id = id)
+
+            data = {
+                'Libro': {
+                    'id' : id,
+                    'titulo' : book.title,
+                    'descripcion' : book.description,
+                    'autor' : str(book.author)
+                    }
+            }
+
+            return JsonResponse(data)
+        
+        except:
+            msj = {
+                'Libro' : []
+                }
+
+            return JsonResponse(msj)

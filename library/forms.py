@@ -65,9 +65,6 @@ class BookForm(forms.ModelForm):
 class BookLoanForm(forms.ModelForm):
     class Meta:
         model = BookLoan
-        # book = forms.ModelChoiceField(queryset=Book.objects.filter(active=True))
-        # partner = forms.ModelChoiceField(queryset=Partner.objects.filter(is_active=True))
-        # employee = forms.ModelChoiceField(queryset=Employee.objects.filter(is_active=True))
         
         fields = ['book','partner','employee','loan_date','return_date']
         labels = {
