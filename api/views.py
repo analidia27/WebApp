@@ -21,8 +21,4 @@ def list_books_json(request):
     data = {
         'libros': list_books
     }
-<<<<<<< HEAD
-    return render(request, 'list_book.html', context=context)
-=======
     return HttpResponse(json.dumps(data, ensure_ascii=False).encode('utf-8'), content_type="application/json") 
->>>>>>> 06e06dcd54ec60bcc530452b351c1780d0dff267
