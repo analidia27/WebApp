@@ -30,6 +30,13 @@ class Employee(models.Model):
 
     def __str__(self):
         return f"{self.name} {self.surname}"
+    def __dict__(self):
+        return {
+            "name": self.name,
+            "surname": self.surname,
+            "numero_legajo": self.numero_legajo,
+            "is_active": self.is_active
+        }
     
 
     
