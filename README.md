@@ -81,7 +81,17 @@ python manage.py runserver
 | POST    | [socios/estado/<int:id>](#cambiar-estado-de-socio) | Cambiar el estado de un socio de activo a inactivo o viceversa |
 
 #### **Registrar y Editar un socio**:
-Al acceder a esta vista, se da la posilibidad al usuario para registrar un nuevo socio empleando un formulario. En caso de acceder pasando el id de un socio registrado, se carga la información actual de ese socio para poder ser modificada:
+Al acceder a esta vista, se da la posilibidad al usuario para registrar un nuevo socio empleando un formulario. En caso de acceder pasando el id de un socio registrado, se carga la información actual de ese socio para poder ser modificada.
+
+**Registrar:**
+
+![Registrar Socio](screenshots/partner_create_update.png)
+
+**Editar:**
+
+![Editar Socio](screenshots/partner_update.png)
+
+**Código:**
 ```python
 def create_update_partner(request, id=None):
     if(id):
@@ -113,6 +123,10 @@ def create_update_partner(request, id=None):
 ```
 #### **Listado de socios**:
 Al acceder a esta vista se cargan todos los socios (activos como inactivos) en una tabla:
+
+![Listado de socios](screenshots/partner_list.png)
+
+**Código**:
 ```python
 def list_partners(request):
 
@@ -125,7 +139,10 @@ def list_partners(request):
     return render(request, 'list_partners.html', context=context)
 ```
 #### **Cambiar estado de socio**:
- Si el socio esta en estado activo pasa a estar inactivo y viceversa. Se realiza desde la vista de listado por medio de la tabla, tomando el id de ese socio puntualmente:
+ Si el socio esta en estado activo pasa a estar inactivo y viceversa. Se realiza desde la vista de listado por medio de la tabla, tomando el id de ese socio puntualmente.
+
+ ![Cambiar estado](screenshots/partner_list.png)
+ **Código**:
  ```python
  def change_status_partner(request,id):
     partner = Partner.objects.get(id=id)
@@ -142,7 +159,11 @@ def list_partners(request):
 | GET    | [api/libros](#listado-de-libros) | Recuperar todos los libros registrados |
 | GET   | [api/libros/<int:id>](#socio-registro) | Recuperar un libro por su ID |
 #### **Listado de libros**:
-Se recupera el listado de libros y se retorna en formato JSON
+Se recupera el listado de libros y se retorna en formato JSON.
+
+ ![Listado de libros](screenshots/api_books.png)
+
+**Código:**
 ```python
 def list_books_json(request):
     books = Book.objects.all().values('id', 'title','author')
@@ -163,8 +184,11 @@ def list_books_json(request):
     }
     return HttpResponse(json.dumps(data, ensure_ascii=False).encode('utf-8'), content_type="application/json") 
 ```
-#### **Listado de libros**:
-Se recupera un libro por su ID y se retorna en formato JSON. En caso de no existir se retorna un array vacio:
+#### **Libro por su ID**:
+Se recupera un libro por su ID y se retorna en formato JSON. En caso de no existir se retorna un array vacio.
+
+![libro por ID](screenshots/api_book_id.png)
+**Código:**
 ```python
 def book_json(request, id):
 
