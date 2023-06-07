@@ -2,7 +2,7 @@ import json
 from django.http import HttpResponse, JsonResponse
 from django.core.serializers import serialize
 from django.shortcuts import render
-from library.models import Book, Author
+from library.models import Book, Author, Partner
 
 def list_books_json(request):
     books = Book.objects.all().values('id', 'title','author')
@@ -49,3 +49,25 @@ def book_json(request, id):
                 }
 
             return JsonResponse(msj)
+        
+def list_partner_json(request):
+    partners = Partner.objects.all().values('id', 'first_name','last_name','date_birth','is_active')
+    if(partners):
+        list_partners = list()
+        for partner in partners:  
+            item = list(partner.values())
+            temp_partner = {}
+            temp_partner['id'] = item[0]
+            temp_partner['first_name'] = item[1]
+            temp_partner['last_name'] = item[2]
+            temp_partner['date_birth'] = str(item[3])
+            temp_partner['is_active'] = item[4]
+            list_partners.append(temp_partner)
+
+    else:
+        list_partners = list()
+    data = {
+        'socios': list_partners
+    }
+    return HttpResponse(json.dumps(data, ensure_ascii=False).encode('utf-8'), content_type="application/json")
+
