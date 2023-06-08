@@ -603,14 +603,81 @@ admin.site.register(Author, AuthorAdmin)
 admin.site.register(Employee, EmployeeAdmin)
 admin.site.register(Partner, PartnerAdmin)
 ```
+#### **Admin autores**:
+Administrador de autores, permite agregar, editar y eliminar registros.
 
+ ![Administador de autores](screenshots/admin_author.png)
+
+**Código:**
+```python
+class AuthorAdmin(admin.ModelAdmin):
+    # Lista de atributos visibles
+    list_display = (
+        "name",
+        "surname",
+        "nationality",
+        "is_active",
+    )
+    #Filtro para mostrar autor activos o por nacionalidades
+    list_filter = ("is_active", "nationality")
+    #Buscador por nombre o apellido de autor
+    search_fields = (
+        "name", 
+        "surname",
+    )
+```
+#### **Admin empleados**:
+Administrador de empleados, permite agregar, editar y eliminar registros.
+
+ ![Administador de empleados](screenshots/admin_employe.png.png)
+**Código:**
+```python
+class EmployeeAdmin(admin.ModelAdmin):
+    # Lista de atributos visibles    
+    list_display = (
+        "name",
+        "surname",
+        "numero_legajo",
+        "is_active",
+    )
+    #Filtro para mostrar solo empleados activos
+    list_filter = ("is_active",)
+    #Buscador por nombre o apellido de empleado
+    search_fields = (
+        "name",
+        "surname",
+    )
+```
+ #### **Admin socios**:
+Administrador de socios, permite agregar, editar y eliminar registros.
+
+ ![Administador de socios](screenshots/admin_partner.png)
+**Código:**
+```python
+class PartnerAdmin(admin.ModelAdmin):
+    # Lista de atributos visibles
+    list_display = (
+        "first_name",
+        "last_name",
+        "date_birth",
+        "is_active",
+    )
+    #Filtro para mostrar solo socios activos
+    list_filter = ("is_active",)
+    #Buscador por nombre o apellido de socio
+    search_fields = (
+        "first_name",
+        "last_name",
+    )
+```
  ### API
  | Método | Endpoint | Descripción |
 | ------ | -------- | ----------- |
 | GET   | [api/libros](#listado-de-libros) | Recuperar todos los libros registrados |
 | GET   | [api/libros/<int:id>](#socio-registro) | Recuperar un libro por su ID |
 | GET   | [api/socios](#socio-registro) | Recuperar todos los socios registrados |
-| GET   | [api/empleados](#listado-de-empleados) | Recuperar todos los empleados registrados |
+| GET   | [api/empleados](#listado-de-empleados) | Recuperar todos los empleados recuperados
+| GET   | [api/autores](#listado-de-autores) | Recuperar todos los autores registrados |
 #### **Listado de libros**:
 Se recupera el listado de libros y se retorna en formato JSON.
 
@@ -719,4 +786,35 @@ def list_employee_json(request):
         'empleados': list_employees
     }
     return HttpResponse(json.dumps(data, ensure_ascii=False).encode('utf-8'), content_type="application/json")
+```
+#### **Listado de autores**:
+Se recupera el listado de empleados y se retorna en formato JSON.
+
+![Empleados](screenshots/api_author.png)
+
+**Código:**
+```python
+def list_author_json(request):
+    authors = Author.objects.all().values(
+        "id", "name", "surname", "nationality", "is_active"
+    )
+    if authors:
+        list_authors = list()
+        for author in authors:
+            item = list(author.values())
+            temp_author = {}
+            temp_author["id"] = item[0]
+            temp_author["nombre"] = item[1]
+            temp_author["apellido"] = item[2]
+            temp_author["nacionalidad"] = item[3]
+            temp_author["activo"] = item[4]
+            list_authors.append(temp_author)
+
+    else:
+        list_authors = list()
+    data = {"autores": list_authors}
+    return HttpResponse(
+        json.dumps(data, ensure_ascii=False).encode("utf-8"),
+        content_type="application/json",
+    )
 ```
