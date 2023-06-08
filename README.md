@@ -70,6 +70,8 @@ python manage.py runserver
 
 ## Modulos 🚨
 - [socios](#socios)
+- [empleados](#empleados)
+- [prestamos_libros](#prestamos-de-libros)
 - [API](#api)
 ### Socios
 
@@ -153,6 +155,177 @@ def list_partners(request):
     partner.save()
     return redirect('list_partners') 
  ```
+
+### Empleados
+
+| Método | Path | Descripción |
+| ------ | -------- | ----------- |
+| POST    | [empleados/nuevo](#registrar-y-editar-un-empleado) | Registrar un nuevo empleado |
+| GET   | [empleados/listado](#listado-de-empleado) | Recuperar el listado de empleados |
+| POST    | [empleados/editar/<int:id>](#registrar-y-editar-un-empleado) | Editar un empleado por su id |
+| POST    | [empleados/estado/<int:id>](#cambiar-estado-de-empleado) | Cambiar el estado de un empleado de activo a inactivo o viceversa |
+
+#### **Registrar y Editar un Empleado**:
+Al acceder a esta vista, se da la posilibidad al usuario para registrar un nuevo empleado empleando un formulario. En caso de acceder pasando el id de un empleado registrado, se carga la información actual de ese socio para poder ser modificada.
+
+**Registrar:**
+
+![Registrar Empleado](screenshots/employee_create.png)
+
+**Editar:**
+
+![Editar Empleado](screenshots/employee_update.png)
+
+**Código:**
+```python
+def create_employee(request,id=None):
+    """Si se envia el id del empleado se obtiene el objeto y se crea el formulario con datos, 
+        sino se crea el formulario vacio"""
+    if(id != None):
+        try:
+            requested_employed = Employee.objects.get(id=id)
+            form = EmployeeForm(instance=requested_employed)         
+        except Exception:
+            return render(request, 'error.html')
+    else:
+        form = EmployeeForm()
+    if request.method == "POST":
+
+        if(id):
+            form = EmployeeForm(request.POST,instance=requested_employed) 
+        else:
+            form = EmployeeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('list_employees')
+        else:
+            return HttpResponseRedirect('create_employee/')
+
+    context = {'form': form,'is_update':id != None}
+    
+    return render(request, 'create_employee.html', context)
+```
+#### **Listado de Empleado**:
+Al acceder a esta vista se cargan todos los empleandos (activos como inactivos) en una tabla:
+
+![Listado de empleandos](screenshots/employee_list.png)
+
+**Código**:
+```python
+def list_employees(request):
+
+    employees = Employee.objects.all()
+
+    context = {
+        'employees' : employees
+    }
+    
+    return render(request, 'list_employees.html', context=context)
+```
+#### **Cambiar estado de Empleado**:
+ Si el empleado esta en estado activo pasa a estar inactivo y viceversa. Se realiza desde la vista de listado por medio de la tabla, tomando el id de ese empleado puntualmente.
+
+ **Código**:
+ ```python
+ def change_status_employee(request,id):
+    employee = Employee.objects.get(id=id)
+    if employee.is_active:
+        employee.is_active = False
+    else:
+        employee.is_active = True
+    employee.save()
+    return redirect('list_employees') 
+```
+
+### Prestamos de Libros
+
+| Método | Path | Descripción |
+| ------ | -------- | ----------- |
+| POST    | [prestamos_libros/nuevo](#registrar-y-editar-un-prestamo-libro) | Registrar un nuevo prestamo de libro |
+| GET   | [prestamos_libros/listado](#listado-de-prestamo-libro) | Recuperar el listado de prestamos de libros |
+| POST    | [prestamos_libros/editar/<int:id>](#registrar-y-editar-un-prestamo-libro) | Editar un prestamo de libro por su id |
+| POST    | [prestamos_libros/eliminar/<int:id>](#eliminar-un-prestamo-libro) | Eliminar un prestamo de libro |
+
+#### **Registrar y Editar un Prestamo de Libro**:
+Al acceder a esta vista, se da la posilibidad al usuario para registrar un nuevo prestamo de libro empleando un formulario. En caso de acceder pasando el id de un prestamo de libro registrado, se carga la información actual de ese prestamo para poder ser modificada.
+
+**Registrar:**
+
+![Registrar Prestamo de Libro](screenshots/book_loan_create.png)
+
+**Editar:**
+
+![Editar Prestamo de Libro](screenshots/book_loan_update.png)
+
+**Código:**
+```python
+def create_update_loan(request, id=None):
+    if(id):
+        """ Si se envia el id del libro se obtiene el objeto y se crea el formulario con datos, 
+        sino se crea el formulario vacio"""
+        try:
+            requested_book_loan = BookLoan.objects.get(id=id)
+            form = BookLoanForm(instance=requested_book_loan) 
+        except Exception:
+            return render(request, 'error.html')
+    else:
+        form = BookLoanForm()
+        
+    if request.method == "POST":
+        if(id):
+            form = BookLoanForm(request.POST,instance=requested_book_loan) 
+        else:
+            form = BookLoanForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/prestamos_libros/listado')
+
+        else:
+            return HttpResponseRedirect('create_book_loan/')
+        
+    context = {'form': form,'is_update': id != None}
+    
+    return render(request, 'create_book_loan.html', context)
+```
+#### **Listado de Prestamo de Libro**:
+Al acceder a esta vista se cargan todos los prestamo de libro en una tabla:
+
+![Listado de Prestamo de Libro](screenshots/book_loan_list.png)
+
+**Código**:
+```python
+def list_book_loans(request):
+
+    book_loans = BookLoan.objects.all()
+
+    context = {
+        'book_loans' : book_loans
+    }
+    
+    return render(request, 'list_book_loans.html', context=context)
+```
+#### **Eliminar un prestamo de libro**:
+ Se eliminara un registro de un prestamo de un libro al acceder al boton eliminar, luego de confirmar:
+
+ ![Eliminar un Prestamo de Libro](screenshots/book_loan_delete_1.png)
+ ![Confirmar Eliminar un Prestamo de Libro](screenshots/book_loan_delete_2.png)
+ **Código**:
+ ```python
+def delete_book_loan(request,id):
+    try:
+        book_loan = BookLoan.objects.get(id=id)
+        if request.method == 'POST':
+            book_loan.delete()
+            return redirect('/prestamos_libros/listado')
+        context = {
+            'book_loan': book_loan
+        }
+        return render(request, 'delete_book_loan.html', context)
+    except Exception:
+        return render(request, 'error.html')
+ 
+ ```
+
  ### API
  | Método | Endpoint | Descripción |
 | ------ | -------- | ----------- |
