@@ -77,7 +77,7 @@ class BookLoanForm(forms.ModelForm):
 
         widgets = {
                 'loan_date': forms.DateInput(attrs={'type': 'date',}),
-                'return_date': forms.DateInput(attrs={'type': 'date','readonly':'readonly'})
+                'return_date': forms.DateInput(attrs={'type': 'date',})
             }
         
     book = forms.ModelChoiceField(queryset=Book.objects.filter(active=True))
