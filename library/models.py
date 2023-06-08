@@ -21,14 +21,7 @@ class Author(models.Model):
 
     def __str__(self):
         return f"{self.name} {self.surname}"
-    def __dict__(self):
-        return {
-            "id": self.id,
-            "nombre": self.name,
-            "apellido": self.surname,
-            "nacionalidad": self.nationality,
-            "activo": self.is_active
-        }
+
 
 class Employee(models.Model):
     name = models.CharField(max_length=100)
@@ -50,13 +43,7 @@ class Book(models.Model):
     active = models.BooleanField(default=True)
     def __str__(self):
         return self.title
-
-    def __dict__(self):
-        return{
-            "id": self.id,
-            "titulo": self.title,
-            "autor": self.author
-        }
+    
 
 class BookLoan(models.Model):
     loan_date = models.DateField()
