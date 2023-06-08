@@ -71,7 +71,10 @@ python manage.py runserver
 ## Modulos 🚨
 - [socios](#socios)
 - [empleados](#empleados)
+- [autores](#autores)
+- [libros](#libros)
 - [prestamos_libros](#prestamos-de-libros)
+- [admin](#admin)
 - [API](#api)
 ### Socios
 
@@ -237,6 +240,262 @@ def list_employees(request):
     return redirect('list_employees') 
 ```
 
+### Autores
+
+| Método | Path | Descripción |
+| ------ | -------- | ----------- |
+| POST    | [autores/nuevo](#registrar-y-editar-un-autor) | Registrar un nuevo autor |
+| GET   | [autores/listado](#listado-de-autor) | Recuperar el listado de autores |
+| POST    | [autores/editar/<int:id>](#registrar-y-editar-un-autor) | Editar un autor por su id |
+| POST    | [autores/estado/<int:id>](#cambiar-estado-de-autor) | Cambiar el estado de un autor de activo a inactivo o viceversa |
+
+#### **Registrar y Editar un autor**:
+Al acceder a esta vista, se da la posilibidad al usuario para registrar un nuevo autor empleando un formulario. En caso de acceder pasando el id de un socio registrado, se carga la información actual de ese socio para poder ser modificada.
+
+**Registrar:**
+
+![Registrar Autor](screenshots/author_create.png)
+
+**Editar:**
+
+![Editar Autor](screenshots/author_update.png)
+
+**Código:**
+```python
+def create_update_author(request, id=None):
+    if(id):
+        """ Si se envia el id del autor se obtiene el objeto y se crea el formulario con datos, 
+        sino se crea el formulario vacio"""
+        try:
+            requested_author = Author.objects.get(id=id)
+            form = AuthorForm(instance=requested_author)
+        except Exception:
+            return render(request, 'error.html') 
+    else:
+        form = AuthorForm()
+        
+    if request.method == "POST":
+        if(id):
+            form = AuthorForm(request.POST,instance=requested_author) 
+        else:
+            form = AuthorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/autores/listado')
+
+        else:
+            return HttpResponseRedirect('create_author/')
+        
+    context = {'form': form,'is_update': id != None}
+    
+    return render(request, 'create_author.html', context)
+
+```
+#### **Listado de autores**:
+Al acceder a esta vista se cargan todos los socios (activos como inactivos) en una tabla:
+
+![Listado de autores](screenshots/author_list.png)
+
+**Código**:
+```python
+def list_authors(request):
+
+    authors = Author.objects.all()
+
+    context = {
+        'authors' : authors
+    }
+    
+    return render(request, 'list_authors.html', context=context)
+
+```
+#### **Cambiar estado de autor**:
+ Si el autor esta en estado activo pasa a estar inactivo y viceversa. Se realiza desde la vista de listado por medio de la tabla, tomando el id de ese autor puntualmente.
+
+ ![Cambiar estado](screenshots/author_list.png)
+ **Código**:
+ ```python
+def change_status_author(request,id):
+    author = Author.objects.get(id=id)
+    if author.is_active:
+        author.is_active = False
+    else:
+        author.is_active = True
+    author.save()
+    return redirect('list_authors') 
+ ```
+
+ ### Libros
+
+| Método | Path | Descripción |
+| ------ | -------- | ----------- |
+| POST    | [libros/nuevo](#registrar-y-editar-un-libro) | Registrar un nuevo libro |
+| GET   | [libros/listado](#listado-de-libro) | Recuperar el listado de libros |
+| POST    | [libros/editar/<int:id>](#registrar-y-editar-un-libro) | Editar un libro por su id |
+| POST    | [libros/estado/<int:id>](#cambiar-estado-de-libro) | Cambiar el estado de un libro de activo a inactivo o viceversa |
+
+#### **Registrar y Editar un libro**:
+Al acceder a esta vista, se da la posilibidad al usuario para registrar un nuevo libro empleando un formulario. En caso de acceder pasando el id de un libro registrado, se carga la información actual de ese libro para poder ser modificada.
+
+**Registrar:**
+
+![Registrar Autor](screenshots/book_create.png)
+
+**Editar:**
+
+![Editar Autor](screenshots/book_update.png)
+
+**Código:**
+```python
+def create_update_book(request, id=None):
+    if id:
+        """ Si se envia el id del libro se obtiene el objeto y se crea el formulario con datos, 
+        sino se crea el formulario vacio"""
+        try:
+            requested_book = Book.objects.get(id=id)
+            form = BookForm(instance=requested_book) 
+        except Exception:
+            return render(request, 'error.html')
+    else:
+        form = BookForm()
+        
+    if request.method == "POST":
+        if id:
+            form = BookForm(request.POST,instance=requested_book) 
+        else:
+            form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/libros/listado')
+
+        else:
+            return HttpResponseRedirect('create_book/')
+        
+    context = {'form': form,'is_update': id != None}
+    
+    return render(request, 'create_book.html', context)
+
+
+```
+#### **Listado de libros**:
+Al acceder a esta vista se cargan todos los libros (activos como inactivos) en una tabla:
+
+![Listado de libros](screenshots/book_list.png)
+
+**Código**:
+```python
+def list_books(request):
+
+    books = Book.objects.all()
+
+    context = {
+        'books' : books
+    }
+    
+    return render(request, 'list_books.html', context=context)
+
+```
+#### **Cambiar estado de libro**:
+ Si el libro esta en estado activo pasa a estar inactivo y viceversa. Se realiza desde la vista de listado por medio de la tabla, tomando el id de ese libro puntualmente.
+
+ ![Cambiar estado](screenshots/book_list.png)
+ **Código**:
+ ```python
+def change_status_book(request,id):
+    book = Book.objects.get(id=id)
+    if book.active:
+        book.active = False
+    else:
+        book.active = True
+    book.save()
+    return redirect('list_books')  
+ ``` 
+### Libros
+
+| Método | Path | Descripción |
+| ------ | -------- | ----------- |
+| POST    | [libros/nuevo](#registrar-y-editar-un-libro) | Registrar un nuevo libro |
+| GET   | [libros/listado](#listado-de-libro) | Recuperar el listado de libros |
+| POST    | [libros/editar/<int:id>](#registrar-y-editar-un-libro) | Editar un libro por su id |
+| POST    | [libros/estado/<int:id>](#cambiar-estado-de-libro) | Cambiar el estado de un libro de activo a inactivo o viceversa |
+
+#### **Registrar y Editar un libro**:
+Al acceder a esta vista, se da la posilibidad al usuario para registrar un nuevo libro empleando un formulario. En caso de acceder pasando el id de un libro registrado, se carga la información actual de ese libro para poder ser modificada.
+
+**Registrar:**
+
+![Registrar Autor](screenshots/book_create.png)
+
+**Editar:**
+
+![Editar Autor](screenshots/book_update.png)
+
+**Código:**
+```python
+def create_update_book(request, id=None):
+    if id:
+        """ Si se envia el id del libro se obtiene el objeto y se crea el formulario con datos, 
+        sino se crea el formulario vacio"""
+        try:
+            requested_book = Book.objects.get(id=id)
+            form = BookForm(instance=requested_book) 
+        except Exception:
+            return render(request, 'error.html')
+    else:
+        form = BookForm()
+        
+    if request.method == "POST":
+        if id:
+            form = BookForm(request.POST,instance=requested_book) 
+        else:
+            form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/libros/listado')
+
+        else:
+            return HttpResponseRedirect('create_book/')
+        
+    context = {'form': form,'is_update': id != None}
+    
+    return render(request, 'create_book.html', context)
+
+
+```
+#### **Listado de libros**:
+Al acceder a esta vista se cargan todos los libros (activos como inactivos) en una tabla:
+
+![Listado de libros](screenshots/book_list.png)
+
+**Código**:
+```python
+def list_books(request):
+
+    books = Book.objects.all()
+
+    context = {
+        'books' : books
+    }
+    
+    return render(request, 'list_books.html', context=context)
+
+```
+#### **Cambiar estado de libro**:
+ Si el libro esta en estado activo pasa a estar inactivo y viceversa. Se realiza desde la vista de listado por medio de la tabla, tomando el id de ese libro puntualmente.
+
+ ![Cambiar estado](screenshots/book_list.png)
+ **Código**:
+ ```python
+def change_status_book(request,id):
+    book = Book.objects.get(id=id)
+    if book.active:
+        book.active = False
+    else:
+        book.active = True
+    book.save()
+    return redirect('list_books')  
+ ```
+
 ### Prestamos de Libros
 
 | Método | Path | Descripción |
@@ -326,10 +585,29 @@ def delete_book_loan(request,id):
  
  ```
 
+### Admin
+El el archivo admin.py se deben realizar importaciones del módulo admin y los modelos creados previamente de la aplicación biblioteca:
+```python
+from django.contrib import admin
+from .models import Book, BookLoan, Author, Employee, Partner
+```
+Se crean clases admin basadas en modelos para ser administradas con un usuario con acceso.
+Para cada modelo se pueden definir los atributos de clase visibles, filtros y campos de busqueda por atributos especificos.
+Los modelos disponibles deben agregarse para que sen visibles:
+
+**Código:**
+```python
+admin.site.register(Book, BookAdmin)
+admin.site.register(BookLoan, BookLoanAdmin)
+admin.site.register(Author, AuthorAdmin)
+admin.site.register(Employee, EmployeeAdmin)
+admin.site.register(Partner, PartnerAdmin)
+```
+
  ### API
  | Método | Endpoint | Descripción |
 | ------ | -------- | ----------- |
-| GET    | [api/libros](#listado-de-libros) | Recuperar todos los libros registrados |
+| GET   | [api/libros](#listado-de-libros) | Recuperar todos los libros registrados |
 | GET   | [api/libros/<int:id>](#socio-registro) | Recuperar un libro por su ID |
 | GET   | [api/socios](#socio-registro) | Recuperar todos los socios registrados |
 | GET   | [api/empleados](#listado-de-empleados) | Recuperar todos los empleados registrados |
