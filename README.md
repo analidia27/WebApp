@@ -158,6 +158,8 @@ def list_partners(request):
 | ------ | -------- | ----------- |
 | GET    | [api/libros](#listado-de-libros) | Recuperar todos los libros registrados |
 | GET   | [api/libros/<int:id>](#socio-registro) | Recuperar un libro por su ID |
+| GET   | [api/socios](#socio-registro) | Recuperar todos los socios registrados |
+| GET   | [api/empleados](#listado-de-empleados) | Recuperar todos los empleados registrados |
 #### **Listado de libros**:
 Se recupera el listado de libros y se retorna en formato JSON.
 
@@ -188,6 +190,7 @@ def list_books_json(request):
 Se recupera un libro por su ID y se retorna en formato JSON. En caso de no existir se retorna un array vacio.
 
 ![libro por ID](screenshots/api_book_id.png)
+
 **Código:**
 ```python
 def book_json(request, id):
@@ -214,4 +217,55 @@ def book_json(request, id):
                 }
 
             return JsonResponse(msj)
+```
+#### **Listado de empleados**:
+Se recupera el listado de socios y se retorna en formato JSON.
+
+![Socios](screenshots/api_partners.png)
+
+**Código:**
+```python
+def list_partner_json(request):
+    partners = Partner.objects.all().values('id', 'first_name','last_name','date_birth','is_active')
+    if(partners):
+        list_partners = list()
+        for partner in partners:  
+            item = list(partner.values())
+            temp_partner = {}
+            temp_partner['id'] = item[0]
+            temp_partner['first_name'] = item[1]
+            temp_partner['last_name'] = item[2]
+            temp_partner['date_birth'] = str(item[3])
+            temp_partner['is_active'] = item[4]
+            list_partners.append(temp_partner)
+
+    else:
+        list_partners = list()
+    data = {
+        'socios': list_partners
+    }
+    return HttpResponse(json.dumps(data, ensure_ascii=False).encode('utf-8'), content_type="application/json")
+
+```
+
+#### **Listado de empleados**:
+Se recupera el listado de empleados y se retorna en formato JSON.
+
+![Empleados](screenshots/api_employees.png)
+
+**Código:**
+```python
+def list_employee_json(request):
+    employees = Employee.objects.all()
+    if employees:
+        list_employees = list()
+        for employee in employees:
+            list_employees.append(employee.__dict__())
+
+    else:
+        list_employees = list()
+    data = {
+        'empleados': list_employees
+    }
+    return HttpResponse(json.dumps(data, ensure_ascii=False).encode('utf-8'), content_type="application/json")
 ```
