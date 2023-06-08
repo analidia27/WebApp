@@ -10,7 +10,7 @@ def index(request):
 def create_employee(request,id=None):
     """Si se envia el id del empleado se obtiene el objeto y se crea el formulario con datos, 
         sino se crea el formulario vacio"""
-    if(id != None):
+    if id:
         try:
             requested_employed = Employee.objects.get(id=id)
             form = EmployeeForm(instance=requested_employed)         

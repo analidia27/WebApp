@@ -84,3 +84,25 @@ def list_employee_json(request):
         'empleados': list_employees
     }
     return HttpResponse(json.dumps(data, ensure_ascii=False).encode('utf-8'), content_type="application/json")
+
+
+def list_author_json(request):
+    authors = Author.objects.all().values('id','name', 'surname','nationality','is_active')
+    if(authors):
+        list_authors = list()
+        for author in authors:  
+            item = list(author.values())
+            temp_author = {}
+            temp_author['id'] = item[0]
+            temp_author['nombre'] = item[1]
+            temp_author['apellido'] = item[2]
+            temp_author['nacionalidad'] = item[3]
+            temp_author['activo'] = item[4]
+            list_authors.append(temp_author)
+
+    else:
+        list_authors = list()
+    data = {
+        'autores': list_authors
+    }
+    return HttpResponse(json.dumps(data, ensure_ascii=False).encode('utf-8'), content_type="application/json") 
