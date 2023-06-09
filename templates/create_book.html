@@ -1,11 +1,11 @@
 {% extends "base.html" %} {% block title %} Creando libro {% endblock %} {%
 block content %} {% if is_update %}
-<h1>Editar Libro</h1>
+<h1 class="text-center">Editar Libro</h1>
 {% else %}
-<h1>Añadir Libro</h1>
+<h1 class="text-center">Añadir Libro</h1>
 {% endif %}
 
-<form action="" method="POST">
+<form class="text-center"action="" method="POST">
   <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
   <div class="mb-3">
     <label class="form-label">{{ form.title.label }}</label>
@@ -27,8 +27,10 @@ block content %} {% if is_update %}
   <br /><br />
   {% endif %}
 </form>
-<a href="{{'/libros/listado'}}" class="btn btn-secondary">
-  <i class="bi bi-arrow-left"></i> Volver al listado</a
->
+<div class="text-center">
+  <a href="{{'/libros/listado'}}" class="btn btn-secondary">
+    <i class="bi bi-arrow-left"></i> Volver al listado
+  </a>
+</div>
 
 {% endblock %}

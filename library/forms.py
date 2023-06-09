@@ -63,10 +63,13 @@ class BookForm(forms.ModelForm):
 
 
 class BookLoanForm(forms.ModelForm):
+    
     class Meta:
+        
         model = BookLoan
         
         fields = ['book','partner','employee','loan_date','return_date']
+        
         labels = {
                 'book':'Libro',
                 'partner': 'Socio',
@@ -74,21 +77,22 @@ class BookLoanForm(forms.ModelForm):
                 'loan_date': 'Fecha de Prestamo',
                 'return_date': 'Fecha de Retorno'
             }
-
+        
         widgets = {
                 'loan_date': forms.DateInput(attrs={'type': 'date',}),
                 'return_date': forms.DateInput(attrs={'type': 'date',})
             }
         
-    book = forms.ModelChoiceField(queryset=Book.objects.filter(active=True))
-    partner = forms.ModelChoiceField(queryset=Partner.objects.filter(is_active=True))
-    employee = forms.ModelChoiceField(queryset=Employee.objects.filter(is_active=True))
+    # book = forms.ModelChoiceField(queryset=Book.objects.filter(active=True))
+    # partner = forms.ModelChoiceField(queryset=Partner.objects.filter(is_active=True))
+    # employee = forms.ModelChoiceField(queryset=Employee.objects.filter(is_active=True))
             
     def __init__(self, *args, **kwargs):
         instance = kwargs.get('instance')
         if instance:
             initial = kwargs.get('initial', {})
             initial['loan_date'] = instance.loan_date.strftime('%Y-%m-%d')
+            initial['return_date'] = instance.return_date.strftime('%Y-%m-%d')
             kwargs['initial'] = initial
         super().__init__(*args, **kwargs)
 

@@ -4,6 +4,8 @@ from django.db import models
 
 
 class Partner(models.Model):
+    # Modelo para Socio
+
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     date_birth = models.DateField()
@@ -14,6 +16,8 @@ class Partner(models.Model):
 
 
 class Author(models.Model):
+    # Modelo para Autor
+
     name = models.CharField(max_length=100)
     surname = models.CharField(max_length=50)
     nationality = models.CharField(max_length=50)
@@ -21,16 +25,11 @@ class Author(models.Model):
 
     def __str__(self):
         return f"{self.name} {self.surname}"
-    def __dict__(self):
-        return {
-            "id": self.id,
-            "nombre": self.name,
-            "apellido": self.surname,
-            "nacionalidad": self.nationality,
-            "activo": self.is_active
-        }
+
 
 class Employee(models.Model):
+    # Modelo para Empleado
+
     name = models.CharField(max_length=100)
     surname = models.CharField(max_length=50)
     numero_legajo = models.CharField(max_length=50)
@@ -43,6 +42,8 @@ class Employee(models.Model):
 
     
 class Book(models.Model):
+    # Modelo para Libro
+
     title = models.TextField(max_length=255)
     description = models.TextField(max_length=255)
     ISBN = models.CharField(max_length=13)
@@ -50,15 +51,11 @@ class Book(models.Model):
     active = models.BooleanField(default=True)
     def __str__(self):
         return self.title
-
-    def __dict__(self):
-        return{
-            "id": self.id,
-            "titulo": self.title,
-            "autor": self.author
-        }
+    
 
 class BookLoan(models.Model):
+    # Modelo para Prestamo de Libro
+    
     loan_date = models.DateField()
     return_date = models.DateField()
     partner = models.ForeignKey(Partner, on_delete=models.CASCADE)

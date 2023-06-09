@@ -66,10 +66,10 @@ def list_partner_json(request):
             item = list(partner.values())
             temp_partner = {}
             temp_partner["id"] = item[0]
-            temp_partner["first_name"] = item[1]
-            temp_partner["last_name"] = item[2]
-            temp_partner["date_birth"] = str(item[3])
-            temp_partner["is_active"] = item[4]
+            temp_partner["nombre"] = item[1]
+            temp_partner["apellido"] = item[2]
+            temp_partner["fecha nacimiento"] = str(item[3])
+            temp_partner["activo"] = item[4]
             list_partners.append(temp_partner)
     # si no hay socios se crea una lista vacia
     else:
@@ -92,10 +92,10 @@ def list_employee_json(request):
         #ciclo para recorrer los empleados obtenidos
         for employee in employees:
             aux = {
-                "name": employee.name,
-                "surname": employee.surname,
+                "nombre": employee.name,
+                "apellido": employee.surname,
                 "numero_legajo": employee.numero_legajo,
-                "is_active": employee.is_active,
+                "activo": employee.is_active,
             }
             list_employees.append(aux)
     # si no hay empleados se crea una lista vacia
