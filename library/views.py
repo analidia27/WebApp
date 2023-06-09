@@ -38,6 +38,7 @@ def create_employee(request,id=None):
 
 
 def list_employees(request):
+    # Se obtiene los registros de todos los empleados
 
     employees = Employee.objects.all()
 
@@ -48,6 +49,8 @@ def list_employees(request):
     return render(request, 'list_employees.html', context=context)
 
 def change_status_employee(request,id):
+    # Cambia el registro un empleado de activo a desactivado, y viceversa
+
     employee = Employee.objects.get(id=id)
     if employee.is_active:
         employee.is_active = False
@@ -58,6 +61,8 @@ def change_status_employee(request,id):
 
 
 def create_update_author(request, id=None):
+    # Se crea o edita los registros de un autor
+
     if(id):
         """ Si se envia el id del autor se obtiene el objeto y se crea el formulario con datos, 
         sino se crea el formulario vacio"""
@@ -87,6 +92,7 @@ def create_update_author(request, id=None):
 
 
 def list_authors(request):
+    # Se obtiene los registros de todos los autores
 
     authors = Author.objects.all()
 
@@ -97,6 +103,8 @@ def list_authors(request):
     return render(request, 'list_authors.html', context=context)
 
 def change_status_author(request,id):
+    # Cambia el registro un autor de activo a desactivado, y viceversa
+
     author = Author.objects.get(id=id)
     if author.is_active:
         author.is_active = False
@@ -106,6 +114,8 @@ def change_status_author(request,id):
     return redirect('list_authors') 
 
 def create_update_partner(request, id=None):
+    # Se crea o edita los registros de un socio
+
     if(id):
         """ Si se envia el id del socio se obtiene el objeto y se crea el formulario con datos, 
         sino se crea el formulario vacio"""
@@ -134,6 +144,7 @@ def create_update_partner(request, id=None):
     return render(request, 'create_partner.html', context)
 
 def list_partners(request):
+    # Se obtiene los registros de todos los socios
 
     partners = Partner.objects.all()
 
@@ -144,6 +155,8 @@ def list_partners(request):
     return render(request, 'list_partners.html', context=context)
 
 def change_status_partner(request,id):
+    # Cambia el registro un socio de activo a desactivado, y viceversa
+
     partner = Partner.objects.get(id=id)
     if partner.is_active:
         partner.is_active = False
@@ -154,6 +167,8 @@ def change_status_partner(request,id):
 
 
 def create_update_book(request, id=None):
+    # Se crea o edita los registros de un libro
+
     if(id):
         """ Si se envia el id del libro se obtiene el objeto y se crea el formulario con datos, 
         sino se crea el formulario vacio"""
@@ -182,6 +197,7 @@ def create_update_book(request, id=None):
     return render(request, 'create_book.html', context)
 
 def list_books(request):
+    # Se obtiene los registros de todos los libros
 
     books = Book.objects.all()
 
@@ -192,6 +208,8 @@ def list_books(request):
     return render(request, 'list_books.html', context=context)
 
 def change_status_book(request,id):
+    # Cambia el registro un libro de activo a desactivado, y viceversa
+
     book = Book.objects.get(id=id)
     if book.active:
         book.active = False
@@ -202,6 +220,7 @@ def change_status_book(request,id):
 
 
 def list_book_loans(request):
+    # Se obtiene los registros de todos los prestamos de libros
 
     book_loans = BookLoan.objects.all()
 
@@ -212,6 +231,8 @@ def list_book_loans(request):
     return render(request, 'list_book_loans.html', context=context)
 
 def create_update_loan(request, id=None):
+    # Se crea o edita los registros de un prestamo de libro
+
     if(id):
         """ Si se envia el id del libro se obtiene el objeto y se crea el formulario con datos, 
         sino se crea el formulario vacio"""
@@ -240,6 +261,8 @@ def create_update_loan(request, id=None):
     return render(request, 'create_book_loan.html', context)
 
 def delete_book_loan(request,id):
+    # Elimina un registro de prestamo de libro
+    
     try:
         book_loan = BookLoan.objects.get(id=id)
         if request.method == 'POST':

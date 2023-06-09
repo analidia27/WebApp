@@ -1,11 +1,11 @@
 {% extends "base.html" %} {% block title %} Creando Prestamo Libro {% endblock %} {%
     block content %} {% if is_update %}
-    <h1>Editar Prestamo de Libro</h1>
+    <h1 class="text-center">Editar Prestamo de Libro</h1>
     {% else %}
-    <h1>Crear Prestamo de Libro</h1>
+    <h1 class="text-center">Crear Prestamo de Libro</h1>
     {% endif %}
     
-    <form action="" method="POST">
+    <form class="text-center"action="" method="POST">
       <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
       {{ form.as_p() }} {% if is_update %}
       <button type="submit" class="btn btn-primary">Editar</button>
@@ -15,8 +15,10 @@
       <br /><br />
       {% endif %}
     </form>
-    <a href="{{'/prestamos_libros/listado'}}" class="btn btn-secondary">
-      <i class="bi bi-arrow-left"></i> Volver al listado</a
-    >
+    <div class="text-center">
+      <a href="{{'/prestamos_libros/listado'}}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Volver al listado
+      </a>
+    </div>
     
     {% endblock %}

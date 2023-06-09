@@ -1,11 +1,11 @@
 {% extends "base.html" %} {% block title %} Creando socio {% endblock %} {%
 block content %} {% if is_update %}
-<h1>Editar Socio</h1>
+<h1 class="text-center">Editar Socio</h1>
 {% else %}
-<h1>Crear Socio</h1>
+<h1 class="text-center">Crear Socio</h1>
 {% endif %}
 
-<form action="" method="POST">
+<form class="text-center"action="" method="POST">
   <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
   {{ form.as_p() }} {% if is_update %}
   <button type="submit" class="btn btn-primary">Editar</button>
@@ -15,8 +15,11 @@ block content %} {% if is_update %}
   <br /><br />
   {% endif %}
 </form>
-<a href="{{'/socios/listado'}}" class="btn btn-secondary">
-  <i class="bi bi-arrow-left"></i> Volver al listado</a
->
+
+<div class="text-center">
+  <a href="{{'/socios/listado'}}" class="btn btn-secondary">
+  <i class="bi bi-arrow-left"></i> Volver al listado
+  </a>
+</div>
 
 {% endblock %}
